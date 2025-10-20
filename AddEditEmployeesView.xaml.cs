@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Employee_Management_System
     /// <summary>
     /// Interaction logic for AddEditEmployeesView.xaml
     /// </summary>
-    public partial class AddEditEmployeesView : Window
+    public partial class AddEditEmployeesView : MetroWindow
     {
         public AddEditEmployeesView()
         {

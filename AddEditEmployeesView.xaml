@@ -1,9 +1,10 @@
-﻿<Window x:Class="Employee_Management_System.AddEditEmployeesView"
+﻿<mah:MetroWindow x:Class="Employee_Management_System.AddEditEmployeesView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Employee_Management_System"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Employee Data" Height="Auto" Width="500">
@@ -46,10 +47,10 @@
         <Label Content="Dismissal Date:" Grid.Row="8" Grid.Column="0" Margin="5"/>
         <DatePicker  Grid.Row="8" Grid.Column="1" Margin="5"/>
         <StackPanel  Orientation="Horizontal" Width="Auto" Height="Auto" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button Content="Save" />
-            <Button Content="Cancel" />
+            <Button Content="Save" Width="200" Height="50" Margin="0"/>
+            <Button Content="Cancel" Width="200" Height="50" Margin="10"/>
         </StackPanel>
     </Grid>
 
     
-</Window>
+</mah:MetroWindow>
