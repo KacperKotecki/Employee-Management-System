@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Employee_Management_System"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Employee Data" Height="450" Width="500">
+        Title="Employee Data" Height="Auto" Width="500">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition  Height="Auto"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -45,9 +45,9 @@
         <DatePicker  Grid.Row="7" Grid.Column="1" Margin="5"/>
         <Label Content="Dismissal Date:" Grid.Row="8" Grid.Column="0" Margin="5"/>
         <DatePicker  Grid.Row="8" Grid.Column="1" Margin="5"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Save" Width="100" Height="25" Margin="10"/>
-            <Button Content="Cancel" Width="100" Height="25" Margin="10"/>
+        <StackPanel  Orientation="Horizontal" Width="Auto" Height="Auto" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Button Content="Save" />
+            <Button Content="Cancel" />
         </StackPanel>
     </Grid>
 
