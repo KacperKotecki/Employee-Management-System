@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Employee_Management_System.ViewModels;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Employee_Management_System
+namespace Employee_Management_System.Views
 {
     /// <summary>
     /// Interaction logic for AddEditEmployeesView.xaml
@@ -23,6 +24,7 @@ namespace Employee_Management_System
         public AddEditEmployeesView()
         {
             InitializeComponent();
+            DataContext = new AddEditEmployeesViewModel();
         }
     }
 }
