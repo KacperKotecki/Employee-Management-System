@@ -7,7 +7,7 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Employee Management System" Height="450" Width="1000">
+        Title="Employee Management System" Height="450" Width="1300">
         
     <Grid Margin="0,0,-245,0">
         <Grid.RowDefinitions>
@@ -16,12 +16,47 @@
   
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding AddEmployeeCommand}" Content="Add Employee" Width="200" Height="50" Margin="10" />
-            <Button Content="Edit Employees"  Width="200" Height="50" Margin="10"/>
-            <Button Content="Delete Employees" Width="200" Height="50" Margin="10"/>
-            <ComboBox Height="50" Width="35" Margin="10"  />
-            <TextBox Text="{Binding EditTextBox}" Height="50" Width="200" Margin="10" />
+            <Button Command="{Binding AddEmployeeCommand}" 
+                    Content="Add Employee" 
+                    Width="200" Height="50" Margin="10" />
+            
+            <Button Command="{Binding EditEmployeeCommand}"
+                    CommandParameter="{Binding SelectedEmployee}"
+                    Content="Edit Employees"  
+                    Width="200" Height="50" Margin="10"
+                    />
+
+            <Button Command="{Binding DismissEmployeeCommand}" 
+                    CommandParameter="{Binding SelectedEmployee}"
+                    Content="Dismiss Employees" 
+                    Width="200" Height="50" Margin="10"/>
+            
+            <ComboBox Height="50" Width="200" Margin="10"
+                  ItemsSource="{Binding Departments}"
+                  SelectedItem="{Binding SelectedDepartment}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"/>
+
         </StackPanel>
-        <DataGrid Grid.Row="1" Margin="10,5,260,15" />
+        <DataGrid Grid.Row="1" Margin="10,5,260,15" 
+          ItemsSource="{Binding DisplayedEmployees}"
+          SelectedItem="{Binding SelectedEmployee}"
+          AutoGenerateColumns="False"
+          SelectionMode="Single"
+          CanUserAddRows="False"
+          IsReadOnly="True">
+          
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Imię" Binding="{Binding FirstName}" Width="*"/>
+                <DataGridTextColumn Header="Nazwisko" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Stanowisko" Binding="{Binding Position}" Width="*"/>
+                <DataGridTextColumn Header="Dział" Binding="{Binding Department.Name}" Width="*"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" Width="*"/>
+                <DataGridTextColumn Header="Data Zatrudnienia" Binding="{Binding HireDate, StringFormat=d}" Width="*"/>
+                <DataGridTextColumn Header="Data Zwolnienia" Binding="{Binding DismissalDate, StringFormat=d}" Width="*"/>
+                <DataGridTextColumn Header="Wynagrodzenie" Binding="{Binding Salary, StringFormat=C}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </mah:MetroWindow>

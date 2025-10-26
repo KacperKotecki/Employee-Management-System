@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Employee_Management_System"
+        xmlns:viewModels="clr-namespace:Employee_Management_System.ViewModels"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Employee Data" Height="Auto" Width="500">
+        Title="Employee Data" Height="Auto" Width="500"
+        SizeToContent="Height">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,38 +22,42 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition  Height="Auto"/>
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="First Name:" Grid.Row="0" Grid.Column="0" Margin="5"/>
-        <TextBox  Grid.Row="0" Grid.Column="1" Margin="5"/>
-        <Label Content="Last Name:" Grid.Row="1" Grid.Column="0" Margin="5"/>
-        <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"/>
-        <Label Content="Email:" Grid.Row="2" Grid.Column="0" Margin="5"/>
-        <TextBox  Grid.Row="2" Grid.Column="1" Margin="5"/>
-        <Label Content="Phone:" Grid.Row="3" Grid.Column="0" Margin="5"/>
-        <TextBox  Grid.Row="3" Grid.Column="1" Margin="5"/>
-        <Label Content="Position:" Grid.Row="4" Grid.Column="0" Margin="5"/>
-        <ComboBox  Grid.Row="4" Grid.Column="1" Margin="5"/>
-        <Label Content="Department:" Grid.Row="5" Grid.Column="0" Margin="5"/>
-        <ComboBox  Grid.Row="5" Grid.Column="1" Margin="5"/>
-        <Label Content="Salary:" Grid.Row="6" Grid.Column="0" Margin="5"/>
-        <TextBox  Grid.Row="6" Grid.Column="1" Margin="5"/>
-        <Label Content="Hire Date:" Grid.Row="7" Grid.Column="0" Margin="5"/>
-        <DatePicker  Grid.Row="7" Grid.Column="1" Margin="5"/>
-        <Label Content="Dismissal Date:" Grid.Row="8" Grid.Column="0" Margin="5"/>
-        <DatePicker  Grid.Row="8" Grid.Column="1" Margin="5"/>
-        <StackPanel  Orientation="Horizontal" Width="Auto" Height="Auto" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button Content="Save" Width="200" Height="50" Margin="0"/>
-            <Button Content="Cancel" Width="200" Height="50" Margin="10"/>
+        <Label Content="First Name:" Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.FirstName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Last Name:" Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.LastName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Email:" Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Phone:" Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.Phone, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Position:" Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.Position, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Department:" Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Departments}"
+                  SelectedItem="{Binding Employee.Department}"
+                  DisplayMemberPath="Name"
+                  Grid.Row="5" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Salary:" Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Employee.Salary, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Grid.Row="6" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Hire Date:" Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+        <DatePicker SelectedDate="{Binding Employee.HireDate}" Grid.Row="7" Grid.Column="1" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="200" Height="40" Margin="5"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Width="200" Height="40" Margin="5" IsCancel="True"/>
         </StackPanel>
     </Grid>
-
-    
 </mah:MetroWindow>
