@@ -18,7 +18,7 @@ namespace Employee_Management_System.Models.Configurations
             Property(e => e.LastName).IsRequired().HasMaxLength(20);
             Property(e => e.Email).IsRequired().HasMaxLength(30);
             Property(e => e.Phone).IsOptional().HasMaxLength(15);
-            Property(e => e.Salary).IsRequired().HasPrecision(18, 2);
+            Property(e => e.Salary).IsOptional().HasPrecision(16, 2);
             Property(e => e.HireDate).IsOptional();
             Property(e => e.DismissalDate).IsOptional();
            

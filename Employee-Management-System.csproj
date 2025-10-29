@@ -94,6 +94,15 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Migrations\202510291906089_InitialCreate.cs" />
+    <Compile Include="Migrations\202510291906089_InitialCreate.Designer.cs">
+      <DependentUpon>202510291906089_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.cs" />
+    <Compile Include="Migrations\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.Designer.cs">
+      <DependentUpon>202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations\DepartmentConfigurations.cs" />
     <Compile Include="Models\Configurations\EmployeeConfigurations.cs" />
     <Compile Include="Models\Configurations\PositionConfigurations.cs" />
@@ -132,6 +141,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202510291906089_InitialCreate.resx">
+      <DependentUpon>202510291906089_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.resx">
+      <DependentUpon>202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -147,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbScripts\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
