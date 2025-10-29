@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Employee_Management_System.Models.Wrappers;
 
 namespace Employee_Management_System.ViewModels
 {
@@ -23,11 +24,11 @@ namespace Employee_Management_System.ViewModels
 
         public ICommand DismissEmployeeCommand { get; set; }
 
-        private ObservableCollection<Employee> _allEmployees; // Przechowuje WSZYSTKICH pracowników
+        private ObservableCollection<EmployeeWrapper> _allEmployees; // Przechowuje WSZYSTKICH pracowników
 
         // Kolekcja tylko do wyświetlania w DataGrid
-        private ObservableCollection<Employee> _displayedEmployees;
-        public ObservableCollection<Employee> DisplayedEmployees
+        private ObservableCollection<EmployeeWrapper> _displayedEmployees;
+        public ObservableCollection<EmployeeWrapper> DisplayedEmployees
         {
             get { return _displayedEmployees; }
             set
@@ -37,11 +38,11 @@ namespace Employee_Management_System.ViewModels
             }
         }
 
-        public ObservableCollection<Department> Departments { get; set; }
+        public ObservableCollection<DepartmentWrapper> Departments { get; set; }
 
         // Właściwość przechowująca dział wybrany w ComboBox
-        private Department _selectedDepartment;
-        public Department SelectedDepartment
+        private DepartmentWrapper _selectedDepartment;
+        public DepartmentWrapper SelectedDepartment
         {
             get { return _selectedDepartment; }
             set
@@ -51,8 +52,8 @@ namespace Employee_Management_System.ViewModels
                 FilterEmployees(); // Wywołaj filtrowanie po każdej zmianie
             }
         }
-        private Employee _selectedEmployee;
-        public Employee SelectedEmployee
+        private EmployeeWrapper _selectedEmployee;
+        public EmployeeWrapper SelectedEmployee
         {
             get { return _selectedEmployee; }
             set 
@@ -64,6 +65,9 @@ namespace Employee_Management_System.ViewModels
 
         public MainViewModel()
         {
+            
+
+
             AddEmployeeCommand = new RelayCommand(AddEditEmployees);
             EditEmployeeCommand = new RelayCommand(AddEditEmployees, CanEditEmployee);
             DismissEmployeeCommand = new RelayCommand(async (obj) =>
@@ -92,12 +96,12 @@ namespace Employee_Management_System.ViewModels
             _allEmployees = DataService.AllEmployees;
 
             // Na starcie, lista wyświetlana to wszyscy pracownicy
-            DisplayedEmployees = new ObservableCollection<Employee>(_allEmployees);
+            DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(_allEmployees);
         }
         private void AddEditEmployees(object obj)
         {
             // ZMIANA: Już nie przekazujemy listy działów!
-            var addEditEmployeesWindow = new AddEditEmployeesView(obj as Employee);
+            var addEditEmployeesWindow = new AddEditEmployeesView(obj as EmployeeWrapper);
             addEditEmployeesWindow.ShowDialog();
             FilterEmployees(); // Odśwież po zamknięciu
         }
@@ -113,13 +117,13 @@ namespace Employee_Management_System.ViewModels
             // Jeśli "Wszyscy" (lub nic) jest wybrane, pokaż wszystkich
             if (SelectedDepartment == null || SelectedDepartment.Id == 0) 
             {
-                DisplayedEmployees = new ObservableCollection<Employee>(_allEmployees);
+                DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(_allEmployees);
             }
             else
             {
                 // 7. Filtruj listę z zabezpieczeniem
                 var filtered = _allEmployees.Where(emp => emp.Department != null && emp.Department.Id == SelectedDepartment.Id).ToList();
-                DisplayedEmployees = new ObservableCollection<Employee>(filtered);
+                DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(filtered);
             }
         }
     }

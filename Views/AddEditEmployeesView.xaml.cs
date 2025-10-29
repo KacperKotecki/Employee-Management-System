@@ -16,6 +16,7 @@ using Employee_Management_System.Models;
 using Employee_Management_System.ViewModels;
 using MahApps.Metro.Controls;
 using System.Collections.ObjectModel;
+using Employee_Management_System.Models.Wrappers;
 
 namespace Employee_Management_System.Views
 {
@@ -24,7 +25,7 @@ namespace Employee_Management_System.Views
     /// </summary>
     public partial class AddEditEmployeesView : MetroWindow
     {
-        public AddEditEmployeesView(Employee employee)
+        public AddEditEmployeesView(EmployeeWrapper employee)
         {
             InitializeComponent();
             

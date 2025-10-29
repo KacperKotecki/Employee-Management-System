@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Employee_Management_System.Models
+namespace Employee_Management_System.Models.Domains
 {
     public class Department
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        // Właściwość nawigacyjna - jeden dział ma wielu pracowników
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

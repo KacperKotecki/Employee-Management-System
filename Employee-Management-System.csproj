@@ -94,8 +94,14 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Configurations\DepartmentConfigurations.cs" />
+    <Compile Include="Models\Configurations\EmployeeConfigurations.cs" />
+    <Compile Include="Models\Configurations\PositionConfigurations.cs" />
+    <Compile Include="Models\Domains\Department.cs" />
+    <Compile Include="Models\Domains\Employee.cs" />
+    <Compile Include="Models\Domains\Position.cs" />
+    <Compile Include="Models\Wrappers\DepartmentWrapper.cs" />
+    <Compile Include="Models\Wrappers\EmployeeWrapper.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="ViewModels\AddEditEmployeesViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -139,7 +145,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Converters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

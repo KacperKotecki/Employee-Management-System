@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Employee_Management_System.Commands;
 using Employee_Management_System.Models;
+using Employee_Management_System.Models.Wrappers;
 using Employee_Management_System.Services;
 
 namespace Employee_Management_System.ViewModels
@@ -10,8 +11,8 @@ namespace Employee_Management_System.ViewModels
     public class AddEditEmployeesViewModel : BaseViewModel
     {
         // Właściwość przechowująca pracownika do edycji lub dodania
-        private Employee _employee;
-        public Employee Employee
+        private EmployeeWrapper _employee;
+        public EmployeeWrapper Employee
         {
             get { return _employee; }
             set
@@ -26,9 +27,9 @@ namespace Employee_Management_System.ViewModels
         public ICommand CancelCommand { get; set; }
 
         
-        public ObservableCollection<Department> Departments { get; set; }
+        public ObservableCollection<DepartmentWrapper> Departments { get; set; }
 
-        public AddEditEmployeesViewModel(Employee employee)
+        public AddEditEmployeesViewModel(EmployeeWrapper employee)
         {
             
             SaveCommand = new RelayCommand(Save);
@@ -38,7 +39,7 @@ namespace Employee_Management_System.ViewModels
             Departments = DataService.Departments;
 
            
-            Employee = employee ?? new Employee();
+            Employee = employee ?? new EmployeeWrapper();
         }
 
         private void Save(object obj)
