@@ -1,30 +1,101 @@
 using Employee_Management_System.Models;
+using Employee_Management_System.Models.Domains;
 using Employee_Management_System.Models.Wrappers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Documents;
+using System.Data.Entity;
+using Employee_Management_System.Models.Converters;
 
 namespace Employee_Management_System.Services
 {
-    public static class DataService
+    public class DataService
     {
-        public static ObservableCollection<DepartmentWrapper> Departments { get; private set; }
-        public static ObservableCollection<EmployeeWrapper> AllEmployees { get; private set; }
-
-        static DataService()
+        public List<Department> GetDepartments()
         {
-            Departments = new ObservableCollection<DepartmentWrapper>
+            using (var context = new ApplicationDbContext())
             {
-                new DepartmentWrapper { Id = 0, Name = "Wszyscy" },
-                new DepartmentWrapper { Id = 1, Name = "IT" },
-                new DepartmentWrapper { Id = 2, Name = "HR" },
-                new DepartmentWrapper { Id = 3, Name = "Ksiêgowoœæ" }
-            };
+                return context.Departments.ToList();
+               
 
-            AllEmployees = new ObservableCollection<EmployeeWrapper>
+            }
+        }
+
+        public List<Position> GetPositions()
+        {
+            using (var context = new ApplicationDbContext())
             {
-                new EmployeeWrapper { FirstName = "Jan", LastName = "Kowalski", Position = "Programista", Department = Departments[1], HireDate = System.DateTime.Now},
-                new EmployeeWrapper { FirstName = "Anna", LastName = "Nowak", Position = "Tester", Department = Departments[2], HireDate = System.DateTime.Now},
-                new EmployeeWrapper { FirstName = "Piotr", LastName = "Zieliñski", Position = "Architekt", Department = Departments[3], HireDate = System.DateTime.Now}
-            };
+                return context.Positions.ToList();
+            }
+        }
+
+        public List<EmployeeWrapper> GetEmployees(int departmentId = 0, int positionId = 0)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var employees = context
+                    .Employees
+                    .Include(e => e.Department)
+                    .Include(e => e.Position)
+                    .AsQueryable();
+
+                if (departmentId != 0)
+                {
+                    employees = employees.Where(e => e.DepartmentId == departmentId);
+                }
+
+                if (positionId != 0)
+                {
+                    employees = employees.Where(e => e.PositionId == positionId);
+                }
+
+                return employees
+                    .ToList()
+                    .Select(x => x.ToWrapper()).ToList();
+            }
+        }
+
+        public void DismissalEmployee(int employeeId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var employee = context.Employees.Find(employeeId);
+                if (employee != null)
+                {
+                    employee.DismissalDate = System.DateTime.Now;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void AddUpdateEmployee(EmployeeWrapper employeeWrapper)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                if (employeeWrapper.Id == 0) 
+                {
+                    var newEmployee = employeeWrapper.ToDao();
+                    context.Employees.Add(newEmployee);
+                }
+                else 
+                {
+                    var employeeToUpdate = context.Employees.Find(employeeWrapper.Id);
+                    if (employeeToUpdate != null)
+                    {
+                        employeeToUpdate.FirstName = employeeWrapper.FirstName;
+                        employeeToUpdate.LastName = employeeWrapper.LastName;
+                        employeeToUpdate.Email = employeeWrapper.Email;
+                        employeeToUpdate.Phone = employeeWrapper.Phone;
+                        employeeToUpdate.Salary = employeeWrapper.Salary;
+                        employeeToUpdate.HireDate = employeeWrapper.HireDate;
+                        employeeToUpdate.DepartmentId = employeeWrapper.Department.Id;
+                        employeeToUpdate.PositionId = employeeWrapper.Position.Id;
+                    }
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

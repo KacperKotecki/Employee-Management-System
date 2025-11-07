@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Employee_Management_System.Models.Wrappers;
+using Employee_Management_System.Models.Domains;
+using Position = Employee_Management_System.Models.Domains.Position;
 
 namespace Employee_Management_System.ViewModels
 {
@@ -24,9 +26,8 @@ namespace Employee_Management_System.ViewModels
 
         public ICommand DismissEmployeeCommand { get; set; }
 
-        private ObservableCollection<EmployeeWrapper> _allEmployees; // Przechowuje WSZYSTKICH pracowników
+        private DataService dataService = new DataService();
 
-        // Kolekcja tylko do wyświetlania w DataGrid
         private ObservableCollection<EmployeeWrapper> _displayedEmployees;
         public ObservableCollection<EmployeeWrapper> DisplayedEmployees
         {
@@ -38,20 +39,34 @@ namespace Employee_Management_System.ViewModels
             }
         }
 
-        public ObservableCollection<DepartmentWrapper> Departments { get; set; }
+        public ObservableCollection<Department> Departments { get; set; }
+        public ObservableCollection<Position> Positions { get; set; }
 
-        // Właściwość przechowująca dział wybrany w ComboBox
-        private DepartmentWrapper _selectedDepartment;
-        public DepartmentWrapper SelectedDepartment
+        
+        private Department _selectedDepartment;
+        public Department SelectedDepartment
         {
             get { return _selectedDepartment; }
             set
             {
                 _selectedDepartment = value;
                 OnPropertyChanged();
-                FilterEmployees(); // Wywołaj filtrowanie po każdej zmianie
+                RefreshEmployees(); // Wywołaj odświeżanie po każdej zmianie
             }
         }
+
+        private Position _selectedPosition;
+        public Position SelectedPosition
+        {
+            get { return _selectedPosition; }
+            set
+            {
+                _selectedPosition = value;
+                OnPropertyChanged();
+                RefreshEmployees();
+            }
+        }
+
         private EmployeeWrapper _selectedEmployee;
         public EmployeeWrapper SelectedEmployee
         {
@@ -72,7 +87,6 @@ namespace Employee_Management_System.ViewModels
             EditEmployeeCommand = new RelayCommand(AddEditEmployees, CanEditEmployee);
             DismissEmployeeCommand = new RelayCommand(async (obj) =>
             {
-                // Poprawnie wyszukujemy aktywne okno typu MetroWindow
                 var metroWindow = Application.Current.Windows.OfType<MetroWindow>().FirstOrDefault(x => x.IsActive);
                 if (metroWindow == null) return; // Zabezpieczenie, jeśli żadne okno nie jest aktywne
 
@@ -80,51 +94,55 @@ namespace Employee_Management_System.ViewModels
                     $"Czy na pewno chcesz zwolnić {SelectedEmployee.FirstName} {SelectedEmployee.LastName}?",
                     MessageDialogStyle.AffirmativeAndNegative);
 
-                // Porównujemy z właściwym typem wyniku dla MahApps
+                
                 if (result == MessageDialogResult.Affirmative)
                 {
-                    SelectedEmployee.DismissalDate = DateTime.Now;
-                    // Odświeżamy widok, aby pokazać zmianę
-                    FilterEmployees();
+                    dataService.DismissalEmployee(SelectedEmployee.Id);
+                    RefreshEmployees(); 
                 }
+
             }, 
-            // Ulepszona logika CanExecute - przycisk nieaktywny dla już zwolnionych
+            
             (obj) => SelectedEmployee != null && SelectedEmployee.DismissalDate == null);
 
-            // POBIERAMY DANE Z SERWISU, ZAMIAST JE TWORZYĆ
-            Departments = DataService.Departments;
-            _allEmployees = DataService.AllEmployees;
+          
+            var departments = dataService.GetDepartments();
+            departments.Insert(0, new Department { Id = 0, Name = "Wszyscy" });
+            Departments = new ObservableCollection<Department>(departments);
 
-            // Na starcie, lista wyświetlana to wszyscy pracownicy
-            DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(_allEmployees);
+            var positions = dataService.GetPositions();
+            positions.Insert(0, new Position { Id = 0, Name = "Wszystkie" });
+            Positions = new ObservableCollection<Position>(positions);
+
+            RefreshEmployees();
         }
+
+        private void RefreshEmployees()
+        {
+            int departmentId = SelectedDepartment?.Id ?? 0;
+            int positionId = SelectedPosition?.Id ?? 0;
+            var employees = dataService.GetEmployees(departmentId, positionId);
+            DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(employees);
+        }
+
         private void AddEditEmployees(object obj)
         {
+            
             // ZMIANA: Już nie przekazujemy listy działów!
             var addEditEmployeesWindow = new AddEditEmployeesView(obj as EmployeeWrapper);
             addEditEmployeesWindow.ShowDialog();
-            FilterEmployees(); // Odśwież po zamknięciu
+
+
+            RefreshEmployees(); // Odśwież po zamknięciu
         }
 
         private bool CanEditEmployee(object obj)
         {
+            
             return SelectedEmployee != null && SelectedEmployee.DismissalDate == null;
         }
 
        
-        private void FilterEmployees()
-        {
-            // Jeśli "Wszyscy" (lub nic) jest wybrane, pokaż wszystkich
-            if (SelectedDepartment == null || SelectedDepartment.Id == 0) 
-            {
-                DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(_allEmployees);
-            }
-            else
-            {
-                // 7. Filtruj listę z zabezpieczeniem
-                var filtered = _allEmployees.Where(emp => emp.Department != null && emp.Department.Id == SelectedDepartment.Id).ToList();
-                DisplayedEmployees = new ObservableCollection<EmployeeWrapper>(filtered);
-            }
-        }
+       
     }
 }

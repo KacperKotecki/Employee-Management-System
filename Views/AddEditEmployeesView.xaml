@@ -29,10 +29,10 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="First Name:" Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Employee.FirstName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Employee.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="5"/>
 
         <Label Content="Last Name:" Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Employee.LastName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Employee.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="1" Margin="5"/>
 
         <Label Content="Email:" Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <TextBox Text="{Binding Employee.Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5"/>
@@ -40,17 +40,20 @@
         <Label Content="Phone:" Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <TextBox Text="{Binding Employee.Phone, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
-        <Label Content="Position:" Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Employee.Position, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="5"/>
-
+        <Label Content="Position:" Grid.Row="4" Grid.Column="0" Margin="1" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Positions}"
+          SelectedItem="{Binding SelectedPosition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+          DisplayMemberPath="Name"
+          Grid.Row="4" Grid.Column="1" Margin="5"/>
+        
         <Label Content="Department:" Grid.Row="5" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <ComboBox ItemsSource="{Binding Departments}"
-                  SelectedItem="{Binding Employee.Department}"
+                  SelectedItem="{Binding SelectedDepartment, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                   DisplayMemberPath="Name"
                   Grid.Row="5" Grid.Column="1" Margin="5"/>
 
         <Label Content="Salary:" Grid.Row="6" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Employee.Salary, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Grid.Row="6" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Employee.Salary, UpdateSourceTrigger=PropertyChanged, StringFormat=N2, ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="1" Margin="5"/>
 
         <Label Content="Hire Date:" Grid.Row="7" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
         <DatePicker SelectedDate="{Binding Employee.HireDate}" Grid.Row="7" Grid.Column="1" Margin="5"/>

@@ -37,6 +37,12 @@
                   DisplayMemberPath="Name"
                   SelectedValuePath="Id"/>
 
+            <ComboBox Height="50" Width="200" Margin="10"
+                  ItemsSource="{Binding Positions}"
+                  SelectedItem="{Binding SelectedPosition}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"/>  
+
         </StackPanel>
         <DataGrid Grid.Row="1" Margin="10,5,260,15" 
           ItemsSource="{Binding DisplayedEmployees}"

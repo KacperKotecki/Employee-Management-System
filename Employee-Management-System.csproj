@@ -102,15 +102,21 @@
     <Compile Include="Migrations\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.Designer.cs">
       <DependentUpon>202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511072047079_AllowNullsForDepartmentAndPosition.cs" />
+    <Compile Include="Migrations\202511072047079_AllowNullsForDepartmentAndPosition.Designer.cs">
+      <DependentUpon>202511072047079_AllowNullsForDepartmentAndPosition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations\DepartmentConfigurations.cs" />
     <Compile Include="Models\Configurations\EmployeeConfigurations.cs" />
     <Compile Include="Models\Configurations\PositionConfigurations.cs" />
+    <Compile Include="Models\Converters\EmployeeConverter.cs" />
     <Compile Include="Models\Domains\Department.cs" />
     <Compile Include="Models\Domains\Employee.cs" />
     <Compile Include="Models\Domains\Position.cs" />
     <Compile Include="Models\Wrappers\DepartmentWrapper.cs" />
     <Compile Include="Models\Wrappers\EmployeeWrapper.cs" />
+    <Compile Include="Models\Wrappers\PositionWrapper.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="ViewModels\AddEditEmployeesViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -147,6 +153,9 @@
     <EmbeddedResource Include="Migrations\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.resx">
       <DependentUpon>202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511072047079_AllowNullsForDepartmentAndPosition.resx">
+      <DependentUpon>202511072047079_AllowNullsForDepartmentAndPosition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -160,9 +169,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DbScripts\202510291942088_SetSalaryPercisionAndOptionalInEmployeesTable.sql" />
   </ItemGroup>
